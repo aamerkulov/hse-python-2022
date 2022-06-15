@@ -38,6 +38,63 @@ def search_phone(content: Any, name: str) -> Optional[str]:
     :return: номер телефона пользователя или None
     """
 
-    # пиши свой код здесь
+    def f_list(key: list) -> str:
+            print("-----",len(key))
+            if len(key) != 0:
+                for i in range(len(key)):
+                    is_list = isinstance(key[i], list)
+                    is_dict = isinstance(key[i], dict)
+                    print("-----", is_list)
+                    if is_list == True:
+                        result = f_list(key[i])
 
-    return None
+                    if is_dict == True:
+                        print("===")
+                        result = f_dict(key[i])
+
+                return result
+
+
+    def f_dict(key: dict) -> str:
+        if len(key) != 0:
+            if 'name' in key:
+                print("+++++++")
+                if key['name'] == name:
+                    print("+++++++")
+                    if 'phone' in key:
+                        print("+++++++",name)
+                        result = key['phone']
+                        print(result)
+                        return result
+
+
+            else:
+                print(":::::::")
+                for i in key:
+                    is_list = isinstance(key[i], list)
+                    is_dict = isinstance(key[i], dict)
+                    if is_list == True:
+                        result = f_list(key[i])
+                        return result
+                    if is_dict == True:
+                        result = f_dict(key[i])
+                        return result
+
+
+
+    result = ""
+    print(isinstance(content,list))
+    print(isinstance(content,dict))
+    is_list = isinstance(content,list)
+    is_dict = isinstance(content,dict)
+    if is_list == True:
+        result = f_list(content)
+    else:
+        result = f_dict(content)
+    print(result)
+    for key in content:
+        print(key)
+    if result == "":
+        result = "None"
+
+    return result

@@ -37,15 +37,22 @@ class Employee:
         """
         Задача: реализовать конструктор класса, чтобы все тесты проходили
         """
+        if isinstance(name,str) and isinstance(position,str) and isinstance(salary,int):
+            self.name = name
+            self.position = position
+            self._salary = salary
+        else:
+            raise ValueError
 
-        # пиши свой код здесь
+
+
 
     def get_salary(self) -> int:
         """
         Метод возвращает зарплату сотрудника.
         """
 
-        # пиши свой код здесь
+        return self._salary
 
     def __eq__(self, other: object) -> bool:
         """
@@ -54,17 +61,46 @@ class Employee:
         Сравнение происходит по уровню позиции см. `get_position_level`.
         Если что-то идет не так - бросаются исключения. Смотрим что происходит в тестах.
         """
+        if isinstance(other,Employee) and isinstance(self, Employee):
+            print("-----")
+            print(self)
+            print(other)
+            print(self.position)
+            print(other.position)
+            print(isinstance(other,Employee))
+            print(isinstance(self, Employee))
+            print(self.position in POSITIONS)
+            print(other.position in POSITIONS)
+            print("-----")
+            if self.position not in POSITIONS or other.position not in POSITIONS:
+                raise ValueError
+            else:
+                print("=====")
+                print(self.position)
+                print(other.position)
+                print("=====")
+                p1 = get_position_level(self.position)
+                p2 = get_position_level(other.position)
+                if p1 == p2:
+                    return True
 
-        # пиши свой код здесь
-
+        else:
+            print("+++++")
+            print(isinstance(other, Employee))
+            print(isinstance(self, Employee))
+            print("+++++")
+            raise TypeError
+            print(self.position)
+            raise NoSuchPositionError(self.position) or NoSuchPositionError(other.position)
+            print(NoSuchPositionError)
     def __str__(self):
         """
         Задача: реализовать строковое представление объекта.
         Пример вывода: 'name: Ivan position manager'
         """
 
-        # пиши свой код здесь
-
+        result = "name: "+self.name+" position: "+self.position
+        return result
     def __hash__(self):
         return id(self)
 
@@ -82,7 +118,9 @@ class Developer(Employee):
         Задача: реализовать конструктор класса, используя конструктор родителя
         """
 
-        # пиши свой код здесь
+        self.name = name
+        self._salary = salary
+        self.language = language
 
 
 class Manager(Employee):
@@ -97,4 +135,5 @@ class Manager(Employee):
         Задача: реализовать конструктор класса, используя конструктор родителя
         """
 
-        # пиши свой код здесь
+        self.name = name
+        self._salary = salary
